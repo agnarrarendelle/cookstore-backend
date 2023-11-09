@@ -1,3 +1,5 @@
+server:
+  port: ${WEB_PORT}
 logging:
   level:
     org:
