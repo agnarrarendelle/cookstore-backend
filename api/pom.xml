@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.huangbusiness</groupId>
-            <artifactId>repository</artifactId>
+            <artifactId>service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -32,7 +32,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>api.com.huangbusiness.Application</mainClass>
+                    <mainClass>com.huangbusiness.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>
