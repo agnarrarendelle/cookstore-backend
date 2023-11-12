@@ -13,10 +13,4 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_Admin')")
-    public Result<Void> addCategory(@RequestBody String name){
-        categoryService.addCategory(name);
-        return Result.success();
-    }
 }
