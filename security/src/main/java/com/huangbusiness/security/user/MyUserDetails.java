@@ -27,7 +27,7 @@ public class MyUserDetails implements UserDetails {
         this.password = password;
         this.authorities = roles.stream()
                 .map(
-                        role -> new SimpleGrantedAuthority(role.toString())
+                        role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toString())
                 )
                 .toList();
 
