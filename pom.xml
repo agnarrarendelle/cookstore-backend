@@ -72,6 +72,7 @@
             <properties>
                 <activeProfile>dev</activeProfile>
                 <repositoryProfile>repositoryDev</repositoryProfile>
+                <securityProfile>securityDev</securityProfile>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -82,6 +83,7 @@
             <properties>
                 <activeProfile>prod</activeProfile>
                 <repositoryProfile>repositoryProd</repositoryProfile>
+                <securityProfile>securityProd</securityProfile>
             </properties>
             <activation>
                 <activeByDefault>false</activeByDefault>
