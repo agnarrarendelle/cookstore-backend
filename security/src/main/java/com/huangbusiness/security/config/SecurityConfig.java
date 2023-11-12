@@ -52,8 +52,10 @@ public class SecurityConfig {
         .cors(AbstractHttpConfigurer::disable)
         .sessionManagement(AbstractHttpConfigurer::disable)
            .authorizeHttpRequests(request -> {
-                request.requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated();
+                request
+                   .requestMatchers("/admin/**").hasRole("Admin")
+                   .requestMatchers(AUTH_WHITELIST).permitAll()
+                   .anyRequest().authenticated();
             });
         http.addFilterBefore(jwtAuthFilter, ExceptionTranslationFilter.class);
 
