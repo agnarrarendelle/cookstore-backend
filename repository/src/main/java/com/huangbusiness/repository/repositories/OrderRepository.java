@@ -1,8 +1,8 @@
-package com.huangbusiness.repository;
+package com.huangbusiness.repository.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.huangbusiness.entity.Order;
+import com.huangbusiness.repository.entity.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {

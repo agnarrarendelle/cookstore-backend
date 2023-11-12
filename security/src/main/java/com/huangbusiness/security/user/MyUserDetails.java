@@ -1,6 +1,6 @@
 package com.huangbusiness.security.user;
 
-import com.huangbusiness.entity.RoleEntity;
+import com.huangbusiness.repository.entity.RoleEntity;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

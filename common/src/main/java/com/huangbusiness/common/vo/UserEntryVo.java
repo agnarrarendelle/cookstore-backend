@@ -1,4 +1,4 @@
-package com.huangbusiness.vo;
+package com.huangbusiness.common.vo;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,9 +1,9 @@
-package com.huangbusiness.controller;
+package com.huangbusiness.api.controller;
 
-import com.huangbusiness.dto.UserEntryDto;
-import com.huangbusiness.result.Result;
+import com.huangbusiness.common.dto.UserEntryDto;
+import com.huangbusiness.common.result.Result;
 import com.huangbusiness.service.UserService;
-import com.huangbusiness.vo.UserEntryVo;
+import com.huangbusiness.common.vo.UserEntryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

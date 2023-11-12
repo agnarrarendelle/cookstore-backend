@@ -1,4 +1,4 @@
-package com.huangbusiness.dto;
+package com.huangbusiness.common.dto;
 
 import lombok.Getter;
 

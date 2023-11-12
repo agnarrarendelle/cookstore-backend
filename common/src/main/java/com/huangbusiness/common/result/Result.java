@@ -1,4 +1,4 @@
-package com.huangbusiness.result;
+package com.huangbusiness.common.result;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

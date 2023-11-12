@@ -1,4 +1,4 @@
-package com.huangbusiness.entity;
+package com.huangbusiness.repository.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -6,23 +6,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "order_item")
+@Table(name = "order")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem {
+public class Order {
+    private enum OrderStatus {Paid, Unpaid, Cancelled, Finished}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "number")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     @NotNull
-    private Integer number;
+    private OrderStatus status;
 
     @Column(name = "total_amount", precision = 7, scale = 2)
     @NotNull
@@ -32,23 +36,27 @@ public class OrderItem {
     @NotNull
     private BigDecimal actualAmount;
 
-    @Column(name = "discount", precision = 3, scale = 2)
-    private BigDecimal discount;
-
     @Column(name = "remark", length = 512)
     private String remark;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    @NotNull
-    private Order order;
+    @Column(name = "customer_name", length = 128)
+    private String customerName;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @Column(name = "table_number")
     @NotNull
-    private Product product;
+    private Short tableNumber;
+
+    @Column(name = "cancelled_time")
+    private Timestamp cancelledTime;
+
+    @Column(name = "finished_time")
+    private Timestamp finishedTime;
 
     @Column(name = "created_time")
     @CreationTimestamp
     private Timestamp createdTime;
+
+    @Column(name = "updated_time")
+    @UpdateTimestamp
+    private Timestamp updatedTime;
 }

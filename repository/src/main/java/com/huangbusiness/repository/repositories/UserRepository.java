@@ -1,6 +1,6 @@
-package com.huangbusiness.repository;
+package com.huangbusiness.repository.repositories;
 
-import com.huangbusiness.entity.UserEntity;
+import com.huangbusiness.repository.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

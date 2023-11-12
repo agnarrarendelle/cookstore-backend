@@ -3,7 +3,7 @@ package com.huangbusiness.service.impl;
 import com.huangbusiness.security.jwt.JwtUtils;
 import com.huangbusiness.security.user.MyUserDetails;
 import com.huangbusiness.service.UserService;
-import com.huangbusiness.vo.UserEntryVo;
+import com.huangbusiness.common.vo.UserEntryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

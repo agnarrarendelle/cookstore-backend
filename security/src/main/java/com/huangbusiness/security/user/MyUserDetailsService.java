@@ -1,7 +1,7 @@
 package com.huangbusiness.security.user;
 
-import com.huangbusiness.entity.UserEntity;
-import com.huangbusiness.repository.UserRepository;
+import com.huangbusiness.repository.entity.UserEntity;
+import com.huangbusiness.repository.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

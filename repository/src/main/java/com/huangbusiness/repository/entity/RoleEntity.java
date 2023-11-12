@@ -1,4 +1,4 @@
-package com.huangbusiness.entity;
+package com.huangbusiness.repository.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

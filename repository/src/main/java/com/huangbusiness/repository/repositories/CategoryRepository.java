@@ -1,6 +1,6 @@
-package com.huangbusiness.repository;
+package com.huangbusiness.repository.repositories;
 
-import com.huangbusiness.entity.Category;
+import com.huangbusiness.repository.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

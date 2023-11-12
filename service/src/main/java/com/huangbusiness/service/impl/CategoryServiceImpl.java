@@ -4,8 +4,8 @@ import com.huangbusiness.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.huangbusiness.entity.Category;
-import com.huangbusiness.repository.CategoryRepository;
+import com.huangbusiness.repository.entity.Category;
+import com.huangbusiness.repository.repositories.CategoryRepository;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
