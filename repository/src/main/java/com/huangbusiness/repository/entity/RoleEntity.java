@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class RoleEntity {
 
-    private enum RoleName {
+    public enum RoleName {
         Admin("Admin"),
         Customer("Customer");
 
