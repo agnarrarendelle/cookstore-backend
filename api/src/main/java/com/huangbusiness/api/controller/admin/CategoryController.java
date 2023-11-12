@@ -1,5 +1,6 @@
 package com.huangbusiness.api.controller.admin;
 
+import com.huangbusiness.common.dto.CategoryDto;
 import com.huangbusiness.common.result.Result;
 import com.huangbusiness.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
     @PostMapping("/add")
-    public Result<Void> addCategory(@RequestBody String name){
+    public Result<Void> addCategory(@RequestBody CategoryDto name){
         categoryService.addCategory(name);
         return Result.success();
     }
