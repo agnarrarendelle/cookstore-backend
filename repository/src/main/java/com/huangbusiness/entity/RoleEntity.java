@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -11,9 +12,24 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+@Getter
+public class RoleEntity {
 
-    private enum RoleName {Admin, Customer}
+    private enum RoleName {
+        Admin("Admin"),
+        Customer("Customer");
+
+        private final String value;
+
+        RoleName(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+    }
 
 
     @Id
