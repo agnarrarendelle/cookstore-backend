@@ -1,6 +1,6 @@
 package com.huangbusiness.api.controller;
 
-import com.huangbusiness.common.dto.UserEntryDto;
+import com.huangbusiness.common.UserEntryDto;
 import com.huangbusiness.common.result.Result;
 import com.huangbusiness.service.UserService;
 import com.huangbusiness.common.vo.UserEntryVo;
@@ -18,7 +18,7 @@ public class UserController {
     UserService userService;
     @PostMapping("/login")
     public Result<UserEntryVo> login(@RequestBody UserEntryDto userInfo){
-        UserEntryVo vo = userService.login(userInfo.getEmail(), userInfo.getPassword());
+        UserEntryVo vo = userService.login(userInfo);
         return Result.success(vo);
     }
 }
