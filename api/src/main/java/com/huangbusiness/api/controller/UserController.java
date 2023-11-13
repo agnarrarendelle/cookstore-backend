@@ -1,6 +1,6 @@
 package com.huangbusiness.api.controller;
 
-import com.huangbusiness.common.UserEntryDto;
+import com.huangbusiness.common.dto.UserEntryDto;
 import com.huangbusiness.common.result.Result;
 import com.huangbusiness.service.UserService;
 import com.huangbusiness.common.vo.UserEntryVo;

@@ -1,6 +1,6 @@
 package com.huangbusiness.service.impl;
 
-import com.huangbusiness.common.UserEntryDto;
+import com.huangbusiness.common.dto.UserEntryDto;
 import com.huangbusiness.security.jwt.JwtUtils;
 import com.huangbusiness.security.user.MyUserDetails;
 import com.huangbusiness.service.UserService;
