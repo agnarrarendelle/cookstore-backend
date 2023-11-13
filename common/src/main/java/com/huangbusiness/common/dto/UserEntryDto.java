@@ -1,4 +1,4 @@
-package com.huangbusiness.common;
+package com.huangbusiness.common.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
