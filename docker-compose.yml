@@ -1,0 +1,36 @@
+version: "3"
+services:
+  mysql:
+    image: "mysql:8.0.35"
+    restart: always
+    volumes:
+      - ./mysql_volume:/var/lib/mysql
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - 1000:${DB_PORT}
+  spring-app:
+    depends_on:
+      - mysql
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROFILE: ${PROFILE}
+    ports:
+      - ${WEB_PORT}:${WEB_PORT}
+    env_file:
+      - ./.env
+    environment:
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      WEB_PORT: ${WEB_PORT}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
