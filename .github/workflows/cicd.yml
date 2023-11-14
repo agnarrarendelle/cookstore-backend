@@ -16,9 +16,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -36,6 +34,7 @@ jobs:
        DB_USERNAME: ${{ secrets.DB_USERNAME }}
        PROFILE: ${{ secrets.PROFILE }}
        WEB_PORT: ${{ secrets.WEB_PORT }}
+       JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
       run: mvn clean install
 
   
