@@ -16,7 +16,7 @@ COPY security ./security/
 
 ARG PROFILE
 
-RUN mvn clean package -U -P ${PROFILE}
+RUN mvn clean package -U -P prod
 
 FROM openjdk:17-oracle
 COPY --from=MAVEN_TOOL_CHAIN /tmp/api/target/api-0.0.1-SNAPSHOT.jar  app.jar
