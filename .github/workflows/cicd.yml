@@ -75,7 +75,7 @@ jobs:
             echo JWT_SECRET_KEY= ${{ secrets.JWT_SECRET_KEY }} >> .env
           SCRIPT_AFTER: |
             cd /${{secrets.EC2_DIRECTORY}}/cookstore-backend
-            sudo docker compose up --build
+            sudo docker-compose up --build
 
  
           
