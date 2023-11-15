@@ -74,6 +74,10 @@ jobs:
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{secrets.SSH_USER_NAME}}
           TARGET: ${{secrets.EC2_DIRECTORY}}/cookstore-backend
+          EXCLUDE: ".git, .github, .gitignore"
+          SCRIPT_BEFORE: |
+            cd /${{secrets.EC2_DIRECTORY}}
+            rm -rf cookstore-backend
 
  
           
