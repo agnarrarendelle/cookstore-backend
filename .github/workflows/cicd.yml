@@ -60,6 +60,7 @@ jobs:
           TARGET: ${{secrets.EC2_DIRECTORY}}/cookstore-backend
           EXCLUDE: ".git, .github, .gitignore"
           SCRIPT_BEFORE: |
+            sudo docker system prune
             cd /${{secrets.EC2_DIRECTORY}}
             rm -rf cookstore-backend
             mkdir cookstore-backend
