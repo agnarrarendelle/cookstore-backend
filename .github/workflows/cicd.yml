@@ -57,6 +57,22 @@ jobs:
         run: |
           docker build -t=${{ env.IMAGE_NAME }} .
           docker push ${{ env.IMAGE_NAME }}
+  deploy:
+    needs: [push_to_registry]
+    name: deploy to ec2
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build & Deploy
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOSTNAME: ${{secrets.SSH_HOST}}
+          USER_NAME: ${{secrets.SSH_USER_NAME}}
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
+          mkdir test_ssh_dir
  
           
 
