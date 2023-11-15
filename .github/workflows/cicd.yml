@@ -70,8 +70,7 @@ jobs:
           HOSTNAME: ${{secrets.SSH_HOST}}
           USER_NAME: ${{secrets.SSH_USER_NAME}}
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key 
-          sudo chmod 600 private_key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}} '
 
               # Inside EC2 now
