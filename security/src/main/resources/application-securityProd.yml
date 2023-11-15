@@ -1,0 +1,3 @@
+jwt:
+  secret_key: ${JWT_SECRET_KEY}
+  expire_day: 3
