@@ -72,8 +72,13 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key 
           sudo chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}}
-          mkdir test_ssh_dir
+          ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}} '
+
+              # Inside EC2 now
+              cd /home
+              sudo mkdir ssh_test_dir
+              '
+
  
           
 
