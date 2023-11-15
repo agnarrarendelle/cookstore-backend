@@ -88,6 +88,7 @@ jobs:
             echo DB_NAME= ${{ secrets.DB_NAME }} >> .env
             echo WEB_PORT= ${{ secrets.WEB_PORT }} >> .env
             echo PROFILE= ${{ secrets.PROFILE }} >> .env
+            echo JWT_SECRET_KEY= ${{ secrets.JWT_SECRET_KEY }} >> .env
 
  
           
