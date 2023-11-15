@@ -70,9 +70,9 @@ jobs:
           HOSTNAME: ${{secrets.SSH_HOST}}
           USER_NAME: ${{secrets.SSH_USER_NAME}}
         run: |
-          echo "$PRIVATE_KEY" > private_key 
+          echo ${{ secrets.SSH_PRIVATE_KEY }} > private_key 
           sudo chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
+          ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}}
           mkdir test_ssh_dir
  
           
