@@ -17,7 +17,22 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-    private enum OrderStatus {Paid, Unpaid, Cancelled, Finished}
+    public enum OrderStatus {
+        Paid("Paid"),
+        Unpaid("Unpaid"),
+        Cancelled("Cancelled"),
+        Finished("Finished");
+        private final String value;
+
+        OrderStatus(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
