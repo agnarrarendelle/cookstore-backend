@@ -22,6 +22,7 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/user/login",
             "/user/register",
+            "/category/**",
 //            "/index/**",
 //            "/product/**",
 //            "/stripe/**",
