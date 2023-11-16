@@ -1,6 +1,7 @@
 package com.huangbusiness.service.impl;
 
 import com.huangbusiness.common.dto.CategoryDto;
+import com.huangbusiness.common.exception.CategoryNotFoundException;
 import com.huangbusiness.common.vo.CategoryVo;
 import com.huangbusiness.repository.mapper.CategoryMapper;
 import com.huangbusiness.service.CategoryService;
@@ -35,5 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryVo> getCategories() {
         List<Category> categories = categoryRepository.findAll();
         return categoryMapper.toVo(categories);
+    }
+
+    @Override
+    public CategoryVo getCategory(int id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+        return categoryMapper.toVo(category);
     }
 }

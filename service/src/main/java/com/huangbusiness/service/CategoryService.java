@@ -10,4 +10,6 @@ public interface CategoryService {
     public void addCategory(@Valid CategoryDto name);
 
     List<CategoryVo> getCategories();
+
+    CategoryVo getCategory(int id);
 }

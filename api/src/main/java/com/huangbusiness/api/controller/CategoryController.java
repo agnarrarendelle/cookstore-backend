@@ -22,4 +22,9 @@ public class CategoryController {
         return Result.success(vo);
     }
 
+    @GetMapping("/{id}")
+    public Result<CategoryVo> getCategory(@PathVariable("id") int id) {
+        CategoryVo vo = categoryService.getCategory(id);
+        return Result.success(vo);
+    }
 }
