@@ -41,7 +41,13 @@ public class JwtUtils {
                 .sign(algorithm);
     }
 
-    private Date expire() {
+    private Date expireHour(int expireHour) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, expireHour);
+        return calendar.getTime();
+    }
+
+    private Date expireDay(int expireDay) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, expireDay * 24);
         return calendar.getTime();
