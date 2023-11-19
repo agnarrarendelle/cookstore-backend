@@ -47,9 +47,12 @@ public class JwtUtils {
         return calendar.getTime();
     }
 
-    public DecodedJWT resolve(String headerToken) {
-        String token = convertToken(headerToken);
-        if (token == null)
+    public DecodedJWT resolve(HttpServletRequest request, HttpServletResponse response) {
+        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        Cookie refreshToken = WebUtils.getCookie(request, "cookstore-jwt-refresh");
+
+        String token = convertToken(authorization);
+        if (token == null && refreshToken == null)
             return null;
 
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(key)).build();
@@ -59,7 +62,17 @@ public class JwtUtils {
             Date expiredAt = jwt.getExpiresAt();
             return new Date().after(expiredAt) ? null : jwt;
         } catch (JWTVerificationException e) {
-            return null;
+            if (refreshToken == null) return null;
+
+            try {
+                DecodedJWT decodedRefreshToken = jwtVerifier.verify(refreshToken.getValue());
+                UserDetails userDetails = toUser(decodedRefreshToken);
+                String newToken = createJwt((MyUserDetails) userDetails);
+                response.setHeader("Authorization", String.format("Bearer %s", newToken));
+                return decodedRefreshToken;
+            } catch (JWTVerificationException ex) {
+                return null;
+            }
         }
     }
 
