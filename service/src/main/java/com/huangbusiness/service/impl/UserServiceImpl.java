@@ -5,6 +5,8 @@ import com.huangbusiness.security.jwt.JwtUtils;
 import com.huangbusiness.security.user.MyUserDetails;
 import com.huangbusiness.service.UserService;
 import com.huangbusiness.common.vo.UserEntryVo;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,12 +27,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Validated
-    public UserEntryVo login(@Valid UserEntryDto userEntryDto) {
+    public UserEntryVo login(@Valid UserEntryDto userEntryDto, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userEntryDto.getEmail(), userEntryDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
 
         String token = jwtUtils.createJwt(userDetails);
+        String refreshToken = jwtUtils.createRefresh(userDetails);
+        Cookie refreshTokenCookie = new Cookie("cookstore-jwt-refresh", refreshToken);
+        refreshTokenCookie.setMaxAge(24 * 60 * 60);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setPath("/admin");
+        response.addCookie(refreshTokenCookie);
         return UserEntryVo.builder().token(token).build();
     }
 }
