@@ -7,16 +7,22 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.huangbusiness.security.user.MyUserDetails;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+
+import jakarta.servlet.http.Cookie;
 
 @Component
 public class JwtUtils {
@@ -26,12 +32,24 @@ public class JwtUtils {
     @Value("${jwt.expire_day}")
     int expireDay;
 
+    @Value("${jwt.expire_hour}")
+    int expireHour;
+
     @Autowired
     UserDetailsService userDetailsService;
 
     public String createJwt(MyUserDetails userDetails) {
+        Date expire = expireHour(expireHour);
+        return createJwt(userDetails, expire);
+    }
+
+    public String createRefresh(MyUserDetails userDetails) {
+        Date expire = expireDay(expireDay);
+        return createJwt(userDetails, expire);
+    }
+
+    private String createJwt(MyUserDetails userDetails, Date expire) {
         Algorithm algorithm = Algorithm.HMAC256(key);
-        Date expire = expire();
         return JWT.create()
                 .withJWTId(UUID.randomUUID().toString())
                 .withClaim("id", userDetails.getUserId())
