@@ -11,4 +11,5 @@ logging:
             sql: TRACE
 jwt:
   secret_key: ${JWT_SECRET_KEY}
-  expire_day: 3
+  expire_day: 1
+  expire_hour: 3
