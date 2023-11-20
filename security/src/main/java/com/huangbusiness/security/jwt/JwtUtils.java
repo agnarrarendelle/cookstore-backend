@@ -19,10 +19,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-import jakarta.servlet.http.Cookie;
-
-import javax.naming.AuthenticationException;
-
 @Component
 public class JwtUtils {
     @Value("${jwt.secret_key}")
