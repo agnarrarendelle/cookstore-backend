@@ -7,4 +7,6 @@ import jakarta.validation.Valid;
 
 public interface UserService {
     public UserEntryVo login(@Valid UserEntryDto userEntryDto, HttpServletResponse response);
+
+    public UserEntryVo refresh(String refreshToken);
 }

@@ -42,4 +42,10 @@ public class UserServiceImpl implements UserService {
         response.addCookie(refreshTokenCookie);
         return UserEntryVo.builder().token(token).build();
     }
+
+    @Override
+    public UserEntryVo refresh(String refreshToken) {
+        String newToken = jwtUtils.refresh(refreshToken);
+        return UserEntryVo.builder().token(newToken).build();
+    }
 }

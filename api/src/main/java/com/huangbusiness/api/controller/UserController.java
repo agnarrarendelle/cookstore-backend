@@ -6,10 +6,7 @@ import com.huangbusiness.service.UserService;
 import com.huangbusiness.common.vo.UserEntryVo;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -20,6 +17,12 @@ public class UserController {
     @PostMapping("/login")
     public Result<UserEntryVo> login(@RequestBody UserEntryDto userInfo,  HttpServletResponse response){
         UserEntryVo vo = userService.login(userInfo, response);
+        return Result.success(vo);
+    }
+
+    @PostMapping("/refresh")
+    public Result<UserEntryVo> login(@CookieValue("cookstore-jwt-refresh") String refreshToken){
+        UserEntryVo vo = userService.refresh(refreshToken);
         return Result.success(vo);
     }
 }
