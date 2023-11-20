@@ -1,9 +1,6 @@
 package com.huangbusiness.api.handler;
 
-import com.huangbusiness.common.exception.CategoryNotFoundException;
-import com.huangbusiness.common.exception.OrderNotExistException;
-import com.huangbusiness.common.exception.OrderStatusInvalidException;
-import com.huangbusiness.common.exception.ProductNotExistException;
+import com.huangbusiness.common.exception.*;
 import com.huangbusiness.common.result.Result;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,5 +26,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(OrderStatusInvalidException.class)
     public ResponseEntity<?> exception(OrderStatusInvalidException exception) {
         return Result.error(exception.getMessage(), OrderStatusInvalidException.httpStatus);
+    }
+
+    @ExceptionHandler(JwtAuthException.class)
+    public ResponseEntity<?> exception(JwtAuthException exception) {
+        return Result.error(exception.getMessage(), JwtAuthException.httpStatus);
     }
 }
