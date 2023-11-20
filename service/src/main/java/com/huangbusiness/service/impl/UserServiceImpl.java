@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         refreshTokenCookie.setMaxAge(24 * 60 * 60);
         refreshTokenCookie.setSecure(true);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setPath("/admin");
+        refreshTokenCookie.setPath("/user/refresh");
         response.addCookie(refreshTokenCookie);
         return UserEntryVo.builder().token(token).build();
     }
