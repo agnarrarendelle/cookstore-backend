@@ -6,16 +6,13 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.huangbusiness.common.exception.JwtAuthException;
 import com.huangbusiness.security.user.MyUserDetails;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import jakarta.servlet.http.Cookie;
+
+import javax.naming.AuthenticationException;
 
 @Component
 public class JwtUtils {
@@ -71,12 +70,9 @@ public class JwtUtils {
         return calendar.getTime();
     }
 
-    public DecodedJWT resolve(HttpServletRequest request, HttpServletResponse response) {
-        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-        Cookie refreshToken = WebUtils.getCookie(request, "cookstore-jwt-refresh");
-
-        String token = convertToken(authorization);
-        if (token == null && refreshToken == null)
+    public DecodedJWT resolve(String headerToken) {
+        String token = convertToken(headerToken);
+        if (token == null)
             return null;
 
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(key)).build();
@@ -86,17 +82,7 @@ public class JwtUtils {
             Date expiredAt = jwt.getExpiresAt();
             return new Date().after(expiredAt) ? null : jwt;
         } catch (JWTVerificationException e) {
-            if (refreshToken == null) return null;
-
-            try {
-                DecodedJWT decodedRefreshToken = jwtVerifier.verify(refreshToken.getValue());
-                UserDetails userDetails = toUser(decodedRefreshToken);
-                String newToken = createJwt((MyUserDetails) userDetails);
-                response.setHeader("Authorization", String.format("Bearer %s", newToken));
-                return decodedRefreshToken;
-            } catch (JWTVerificationException ex) {
-                return null;
-            }
+            throw new JwtAuthException();
         }
     }
 
@@ -110,5 +96,16 @@ public class JwtUtils {
         Map<String, Claim> claims = jwt.getClaims();
         String email = claims.get("email").asString();
         return userDetailsService.loadUserByUsername(email);
+    }
+
+    public String refresh(String refreshToken) {
+        try {
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(key)).build();
+            DecodedJWT decodedRefreshToken = jwtVerifier.verify(refreshToken);
+            UserDetails userDetails = toUser(decodedRefreshToken);
+            return createJwt((MyUserDetails) userDetails);
+        } catch (JWTVerificationException e) {
+            throw new JwtAuthException();
+        }
     }
 }
