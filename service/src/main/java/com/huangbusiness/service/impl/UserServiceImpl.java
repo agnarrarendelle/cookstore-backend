@@ -5,10 +5,11 @@ import com.huangbusiness.security.jwt.JwtUtils;
 import com.huangbusiness.security.user.MyUserDetails;
 import com.huangbusiness.service.UserService;
 import com.huangbusiness.common.vo.UserEntryVo;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,12 +35,15 @@ public class UserServiceImpl implements UserService {
 
         String token = jwtUtils.createJwt(userDetails);
         String refreshToken = jwtUtils.createRefresh(userDetails);
-        Cookie refreshTokenCookie = new Cookie("cookstore-jwt-refresh", refreshToken);
-        refreshTokenCookie.setMaxAge(24 * 60 * 60);
-        refreshTokenCookie.setSecure(true);
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setPath("/user/refresh");
-        response.addCookie(refreshTokenCookie);
+
+        ResponseCookie cookie = ResponseCookie.from("cookstore-jwt-refresh", refreshToken)
+                .httpOnly(true)
+                .path("/user/refresh")
+//                .sameSite("None")
+//                .secure(true)
+                .maxAge(24 * 60 * 60)
+                .build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return UserEntryVo.builder().token(token).build();
     }
 
