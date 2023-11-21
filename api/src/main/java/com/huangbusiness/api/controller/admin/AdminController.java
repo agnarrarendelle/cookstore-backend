@@ -1,4 +1,4 @@
-package com.huangbusiness.api.controller;
+package com.huangbusiness.api.controller.admin;
 
 import com.huangbusiness.common.dto.UserEntryDto;
 import com.huangbusiness.common.result.Result;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminController {
 
     @Autowired
     UserService userService;
