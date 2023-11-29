@@ -25,4 +25,9 @@ public class AdminController {
         UserEntryVo vo = userService.refresh(refreshToken);
         return Result.success(vo);
     }
+
+    @PostMapping("/validate")
+    public Result<Void> validate(){
+        return Result.success();
+    }
 }
