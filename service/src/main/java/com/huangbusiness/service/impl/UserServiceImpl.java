@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
         ResponseCookie cookie = ResponseCookie.from("cookstore-jwt-refresh", refreshToken)
                 .httpOnly(true)
-                .path("/user/refresh")
+                .path("/admin/refresh")
 //                .sameSite("None")
 //                .secure(true)
                 .maxAge(24 * 60 * 60)
