@@ -4,7 +4,7 @@ import com.huangbusiness.security.filter.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNullApi;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,8 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -26,9 +24,8 @@ public class SecurityConfig {
     JwtAuthFilter jwtAuthFilter;
 
     private static final String[] AUTH_WHITELIST = {
-            "/user/login",
-            "/user/register",
-            "/user/refresh",
+            "/admin/login",
+            "/admin/refresh",
             "/category/**",
 //            "/index/**",
 //            "/product/**",
@@ -56,15 +53,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        .csrf(AbstractHttpConfigurer::disable)
-        .cors(AbstractHttpConfigurer::disable)
-        .sessionManagement(AbstractHttpConfigurer::disable)
-           .authorizeHttpRequests(request -> {
-                request
-                   .requestMatchers("/admin/**").hasRole("Admin")
-                   .requestMatchers(AUTH_WHITELIST).permitAll()
-                   .anyRequest().authenticated();
-            });
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .sessionManagement(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(request -> {
+                    request
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers("/admin/**").hasRole("Admin")
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .anyRequest().permitAll();
+                });
         http.addFilterBefore(jwtAuthFilter, ExceptionTranslationFilter.class);
 
         return http.build();
