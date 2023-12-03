@@ -91,6 +91,7 @@
                 <activeProfile>dev</activeProfile>
                 <repositoryProfile>repositoryDev</repositoryProfile>
                 <securityProfile>securityDev</securityProfile>
+                <serviceProfile>serviceDev</serviceProfile>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -102,6 +103,7 @@
                 <activeProfile>prod</activeProfile>
                 <repositoryProfile>repositoryProd</repositoryProfile>
                 <securityProfile>securityProd</securityProfile>
+                <serviceProfile>serviceProd</serviceProfile>
             </properties>
             <activation>
                 <activeByDefault>false</activeByDefault>
