@@ -20,7 +20,7 @@ public class ProductDto {
     @Size(min = 1, max = 128)
     private String name;
 
-    @Size(min = 1, max = 512)
+    @Size(min = 0, max = 512)
     private String description;
 
     @NotNull
