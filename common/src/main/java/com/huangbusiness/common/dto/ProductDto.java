@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -39,4 +40,6 @@ public class ProductDto {
 
     @NotNull(groups = UpdateProductAction.class)
     private Boolean isAvailable;
+
+    private UUID productImageId;
 }
