@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `cookstore`.`product_image` (
   INDEX `fk_product_image_to_product_idx` (`product_id` ASC) VISIBLE,
   CONSTRAINT `fk_product_image_to_product`
     FOREIGN KEY (`product_id`)
-    REFERENCES `cookstore`.`product` (`category_id`)
+    REFERENCES `cookstore`.`product` (`id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
