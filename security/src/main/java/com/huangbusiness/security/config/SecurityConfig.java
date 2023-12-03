@@ -59,8 +59,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .requestMatchers("/admin/**").hasRole("Admin")
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("Admin")
                         .anyRequest().permitAll();
                 });
         http.addFilterBefore(jwtAuthFilter, ExceptionTranslationFilter.class);
