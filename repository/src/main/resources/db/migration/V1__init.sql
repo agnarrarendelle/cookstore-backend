@@ -31,10 +31,10 @@ ENGINE = InnoDB;
 -- Table `cookstore`.`product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cookstore`.`product` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(128) NOT NULL,
   `status` ENUM('Available', 'Unavailable') NOT NULL DEFAULT 'Unavailable',
-  `sold_number` INT UNSIGNED NOT NULL DEFAULT 0,
+  `sold_number` INT NOT NULL DEFAULT 0,
   `description` VARCHAR(512) NULL,
   `price` DECIMAL(6,2) NOT NULL,
   `discount` DECIMAL(3,2) NULL,
