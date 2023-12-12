@@ -32,4 +32,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> exception(JwtAuthException exception) {
         return Result.error(exception.getMessage(), JwtAuthException.httpStatus);
     }
+
+    @ExceptionHandler(ProductImageException.class)
+    public ResponseEntity<?> exception(ProductImageException exception) {
+        return Result.error(exception.getMessage(), ProductImageException.httpStatus);
+    }
 }

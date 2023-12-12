@@ -2,6 +2,7 @@ package com.huangbusiness.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.huangbusiness.common.dto.ProductImageDto;
+import com.huangbusiness.common.exception.ProductImageException;
 import com.huangbusiness.common.vo.ProductImageVo;
 import com.huangbusiness.repository.entity.Product;
 import com.huangbusiness.repository.entity.ProductImage;
@@ -41,18 +42,16 @@ public class ProductImageServiceImpl implements ProductImageService {
         String requestBody = String.format("{\"imageKey\":\"%s\"}", imageKey);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        String requestUrl = String.format("%s/product-images", productImageApiUrl);
 
-        // Make the HTTP POST request
-        ResponseEntity<JsonNode> responseEntity = new RestTemplate()
-                .exchange(productImageApiUrl, HttpMethod.POST, requestEntity, JsonNode.class);
-
-        // Process the response
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+        try {
+            // Make the HTTP POST request
+            ResponseEntity<JsonNode> responseEntity = new RestTemplate()
+                    .exchange(requestUrl, HttpMethod.POST, requestEntity, JsonNode.class);
             JsonNode map = responseEntity.getBody();
             return ProductImageVo.builder().uploadUrl(map.get("url").asText()).imageId(imageKey).build();
-        } else {
-            System.err.println("Error: " + responseEntity.getStatusCode());
-            throw new RuntimeException();
+        } catch (Exception e) {
+            throw new ProductImageException();
         }
     }
 
@@ -62,11 +61,16 @@ public class ProductImageServiceImpl implements ProductImageService {
         headers.set("x-api-key", productImageApiAccessKey);
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-        String requestUrl = String.format("%s/%s", productImageApiUrl, id.toString());
-        ResponseEntity<JsonNode> responseEntity = new RestTemplate()
-                .exchange(requestUrl, HttpMethod.GET, requestEntity, JsonNode.class);
+        String requestUrl = String.format("%s/product-image/%s", productImageApiUrl, id.toString());
 
-        return null;
+        try {
+            ResponseEntity<JsonNode> responseEntity = new RestTemplate()
+                    .exchange(requestUrl, HttpMethod.GET, requestEntity, JsonNode.class);
+            JsonNode map = responseEntity.getBody();
+            return ProductImageVo.builder().imageUrl(map.get("url").asText()).build();
+        } catch (Exception e) {
+            throw new ProductImageException();
+        }
     }
 
     @Override
