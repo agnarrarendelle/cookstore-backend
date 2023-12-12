@@ -1,0 +1,3 @@
+product_image_api:
+  url: ${PRODUCT_IMAGE_API_PATH}
+  access_key: ${PRODUCT_IMAGE_API_ACCESS_KEY}

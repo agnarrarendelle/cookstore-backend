@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.huangbusiness.common.exception.JwtAuthException;
 import com.huangbusiness.security.user.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,12 +27,24 @@ public class JwtUtils {
     @Value("${jwt.expire_day}")
     int expireDay;
 
+    @Value("${jwt.expire_hour}")
+    int expireHour;
+
     @Autowired
     UserDetailsService userDetailsService;
 
     public String createJwt(MyUserDetails userDetails) {
+        Date expire = expireHour(expireHour);
+        return createJwt(userDetails, expire);
+    }
+
+    public String createRefresh(MyUserDetails userDetails) {
+        Date expire = expireDay(expireDay);
+        return createJwt(userDetails, expire);
+    }
+
+    private String createJwt(MyUserDetails userDetails, Date expire) {
         Algorithm algorithm = Algorithm.HMAC256(key);
-        Date expire = expire();
         return JWT.create()
                 .withJWTId(UUID.randomUUID().toString())
                 .withClaim("id", userDetails.getUserId())
@@ -41,7 +54,13 @@ public class JwtUtils {
                 .sign(algorithm);
     }
 
-    private Date expire() {
+    private Date expireHour(int expireHour) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, expireHour);
+        return calendar.getTime();
+    }
+
+    private Date expireDay(int expireDay) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, expireDay * 24);
         return calendar.getTime();
@@ -59,7 +78,7 @@ public class JwtUtils {
             Date expiredAt = jwt.getExpiresAt();
             return new Date().after(expiredAt) ? null : jwt;
         } catch (JWTVerificationException e) {
-            return null;
+            throw new JwtAuthException();
         }
     }
 
@@ -73,5 +92,16 @@ public class JwtUtils {
         Map<String, Claim> claims = jwt.getClaims();
         String email = claims.get("email").asString();
         return userDetailsService.loadUserByUsername(email);
+    }
+
+    public String refresh(String refreshToken) {
+        try {
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(key)).build();
+            DecodedJWT decodedRefreshToken = jwtVerifier.verify(refreshToken);
+            UserDetails userDetails = toUser(decodedRefreshToken);
+            return createJwt((MyUserDetails) userDetails);
+        } catch (JWTVerificationException e) {
+            throw new JwtAuthException();
+        }
     }
 }

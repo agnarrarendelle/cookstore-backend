@@ -1,10 +1,12 @@
 package com.huangbusiness.service.impl;
 
 import com.huangbusiness.common.dto.ProductDto;
+import com.huangbusiness.common.dto.ProductImageDto;
 import com.huangbusiness.common.exception.ProductNotExistException;
 import com.huangbusiness.repository.entity.Category;
 import com.huangbusiness.repository.entity.Product;
 import com.huangbusiness.repository.repositories.ProductRepository;
+import com.huangbusiness.service.ProductImageService;
 import com.huangbusiness.service.ProductService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,6 +23,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
+
+
+    @Autowired
+    ProductImageService productImageService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -40,6 +46,13 @@ public class ProductServiceImpl implements ProductService {
                 .build();
 
         productRepository.save(product);
+
+        productImageService.saveImageDetails(
+                ProductImageDto
+                        .builder()
+                        .id(productDto.getProductImageId())
+                        .productId(product.getId())
+                        .build());
     }
 
     @Override

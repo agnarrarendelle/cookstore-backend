@@ -31,10 +31,10 @@ ENGINE = InnoDB;
 -- Table `cookstore`.`product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cookstore`.`product` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(128) NOT NULL,
   `status` ENUM('Available', 'Unavailable') NOT NULL DEFAULT 'Unavailable',
-  `sold_number` INT UNSIGNED NOT NULL DEFAULT 0,
+  `sold_number` INT NOT NULL DEFAULT 0,
   `description` VARCHAR(512) NULL,
   `price` DECIMAL(6,2) NOT NULL,
   `discount` DECIMAL(3,2) NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `cookstore`.`product_image` (
   INDEX `fk_product_image_to_product_idx` (`product_id` ASC) VISIBLE,
   CONSTRAINT `fk_product_image_to_product`
     FOREIGN KEY (`product_id`)
-    REFERENCES `cookstore`.`product` (`category_id`)
+    REFERENCES `cookstore`.`product` (`id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `cookstore`.`order` (
   `actual_amount` DECIMAL(7,2) NOT NULL,
   `remark` VARCHAR(512) NULL,
   `customer_name` VARCHAR(128) NULL,
+  `table_number` TINYINT NOT NULL,
   `cancelled_time` DATETIME NULL,
   `finished_time` DATETIME NULL,
   `created_time` DATETIME NOT NULL,
@@ -99,7 +100,6 @@ CREATE TABLE IF NOT EXISTS `cookstore`.`order_item` (
   `total_amount` DECIMAL(7,2) NOT NULL,
   `actual_amount` DECIMAL(7,2) NOT NULL,
   `discount` DECIMAL(3,2) NULL,
-  `table_number` TINYINT NOT NULL,
   `remark` VARCHAR(512) NULL,
   `order_id` INT NOT NULL,
   `product_id` INT NOT NULL,
