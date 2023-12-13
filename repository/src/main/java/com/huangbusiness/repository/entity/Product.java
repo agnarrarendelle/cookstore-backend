@@ -73,4 +73,8 @@ public class Product {
 
     @Column(name = "category_id", insertable = false, updatable = false)
     private Integer categoryId;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval=true)
+    @ToString.Exclude
+    private ProductImage productImage;
 }
