@@ -12,4 +12,6 @@ public interface CategoryService {
     List<CategoryVo> getCategories();
 
     CategoryVo getCategory(int id);
+
+    CategoryVo getCategoryWithProducts(int id);
 }
