@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 public class ProductVo {
+    private Integer id;
     private String name;
     private String status;
     private String description;

@@ -63,6 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<ProductVo> productVos = products.stream().map(p -> {
                     ProductImageVo productImageVo = productImageService.getImage(p.getProductImage().getId());
                     return ProductVo.builder()
+                            .id(p.getId())
                             .imageUrl(productImageVo.getImageUrl())
                             .name(p.getName())
                             .status(p.getStatus().toString())
