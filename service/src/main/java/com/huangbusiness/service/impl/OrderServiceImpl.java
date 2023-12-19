@@ -2,6 +2,7 @@ package com.huangbusiness.service.impl;
 
 import com.huangbusiness.common.dto.OrderDto;
 import com.huangbusiness.common.dto.OrderItemDto;
+import com.huangbusiness.common.exception.OrderSystemNotReadyException;
 import com.huangbusiness.common.vo.OrderItemVo;
 import com.huangbusiness.common.vo.OrderVo;
 import com.huangbusiness.service.event.OrderSubmitEvent;
@@ -15,6 +16,7 @@ import com.huangbusiness.repository.repositories.OrderItemRepository;
 import com.huangbusiness.repository.repositories.OrderRepository;
 import com.huangbusiness.repository.repositories.ProductRepository;
 import com.huangbusiness.service.OrderService;
+import com.huangbusiness.service.handler.MyWebSocketHandler;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
+    @Autowired
+    private MyWebSocketHandler myWebSocketHandler;
+
     @Override
     @Transactional
     public void updateStatus(int id, String status) {
@@ -61,6 +66,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void createOrder(OrderDto orderDto) {
+        if(!myWebSocketHandler.isAdminConnected())
+            throw new OrderSystemNotReadyException();
+
         Order newOrder = new Order();
 
         BigDecimal totalAmount = new BigDecimal(0);
