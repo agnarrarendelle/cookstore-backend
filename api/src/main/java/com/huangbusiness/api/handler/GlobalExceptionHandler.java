@@ -37,4 +37,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> exception(ProductImageException exception) {
         return Result.error(exception.getMessage(), ProductImageException.httpStatus);
     }
+
+    @ExceptionHandler(OrderSystemNotReadyException.class)
+    public ResponseEntity<?> exception(OrderSystemNotReadyException exception) {
+        return Result.error(exception.getMessage(), OrderSystemNotReadyException.httpStatus);
+    }
 }
